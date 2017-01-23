@@ -21,7 +21,7 @@ const importFile = (route, file) => {
         });
     return json;
 }
-console.log(JSON.stringify(importFile(__dirname, 'changelog.txt'), null, 2))
+// console.log(JSON.stringify(importFile(__dirname, 'changelog.txt'), null, 2))
 
 
 const exportFile = (route, file, data) => {
@@ -34,4 +34,9 @@ const exportFile = (route, file, data) => {
     }
     fs.writeFileSync(path.join(route, file), output, 'UTF-8');
 }
-exportFile(__dirname, 'changelog.txt', importFile(__dirname, 'changelog.txt'))
+// exportFile(__dirname, 'changelog.txt', importFile(__dirname, 'changelog.txt'))
+
+module.exports = {
+    importFile: importFile,
+    exportFile: exportFile
+}

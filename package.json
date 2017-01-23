@@ -1,0 +1,22 @@
+{
+  "name": "dschangelog",
+  "version": "0.1.0",
+  "description": "Changelog manager",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danieluy/ds_changelog.git"
+  },
+  "author": "http://www.danielsosa.uy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danieluy/ds_changelog/issues"
+  },
+  "homepage": "https://github.com/danieluy/ds_changelog#readme",
+  "devDependencies": {
+    "electron": "^1.4.15"
+  }
+}
