@@ -1,0 +1,45 @@
+/*--  Reset  -----------------------------------------------------------------*/
+*, html{
+   margin: 0px;
+   padding: 0px;
+   box-sizing: border-box;
+   font-family: Roboto, FreeSans, Helvetica, Arial, sans-serif;
+   color: #eee;
+   font-size: 16px;
+}
+body{
+   font-family: Roboto, sans-serif;
+   color: #555;
+   font-size: 16px;
+   background-color: #333;
+}
+::-webkit-scrollbar {
+    width: 4px;
+}
+ 
+::-webkit-scrollbar-track {
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: #555;
+}
+.entry-list{
+    list-style-type: none;
+    padding: 20px;
+}
+.list-title{
+    font-size: 2rem;
+}
+.list-item{
+    display: block;
+    padding: 15px;
+    background-color: #555;
+    border-bottom: 1px solid #333
+}
+.list-item.plus{
+    background-color: #585
+}
+.list-item.minus{
+    background-color: #855
+}

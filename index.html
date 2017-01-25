@@ -4,16 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Hello World!</title>
+  <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
-  <h1>Hello World!</h1>
+  <!--<h1>Hello World!</h1>
   We are using node
   <script>document.write(process.versions.node)</script>, Chrome
-  <script>document.write(process.versions.chrome)</script>, and Electron
-  <script>document.write(process.versions.electron)</script>.
+<script>document.write(process.versions.chrome)</script>, and Electron
+<script>document.write(process.versions.electron)</script>.-->
+<label for="input-file">
+<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 0h24v24H0z" fill="none"/>
+  <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
+</svg>
+</label>
+  <input type="file" id="input-file" hidden/>
 
-  <button id="btn-send">Send</button>
+  <div id="log-entries-list"></div>
 
   <script>require('./index.js')</script>
 </body>

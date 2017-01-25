@@ -1,30 +1,6 @@
-v0.1.1
-	20170121 | TODO | Game.updatePlayers() has to hide the character from the player that has it assigned to, or another method has to do it
-	20170121 | TODO | Add length property to Game.player, Game.socket and Game.character
-	20170121 | TODO | Test Game.assignCharacters()
-	20170121 | TODO | Test Game.startGame()
-	20170121 | TODO | Test Game.characterPerPlayer()
-	20170121 | - | Removed Game.updateCharacters()
-	20170121 | + | Added Game.assignCharacters()
-	20170121 | + | Added Game.startGame()
-	20170121 | + | Added Game.characterPerPlayer()
-	20170120 | + | Basic game creation and joining functionality ready, working on the characters functionality
-	20170120 | + | Objects (classes) code updated and tested on classical object creation
-	20170120 | + | Changed to classical object creation
-	20170118 | + | Started TDD :)
-	20170112 | + | Started development
 v0.1.0
-	20170121 | TODO | Game.updatePlayers() has to hide the character from the player that has it assigned to, or another method has to do it
-	20170121 | TODO | Add length property to Game.player, Game.socket and Game.character
-	20170121 | TODO | Test Game.assignCharacters()
-	20170121 | TODO | Test Game.startGame()
-	20170121 | TODO | Test Game.characterPerPlayer()
-	20170121 | - | Removed Game.updateCharacters()
-	20170121 | + | Added Game.assignCharacters()
-	20170121 | + | Added Game.startGame()
-	20170121 | + | Added Game.characterPerPlayer()
-	20170120 | + | Basic game creation and joining functionality ready, working on the characters functionality
-	20170120 | + | Objects (classes) code updated and tested on classical object creation
-	20170120 | + | Changed to classical object creation
-	20170118 | + | Started TDD :)
-	20170112 | + | Started development
+	20170124 | + | Started the styles
+	20170124 | + | Started the architecture definition
+	20170124 | - | Removed files.js dependency, replaced it with fs module directly
+	20170123 | + | Added Electron.js
+	20170123 | + | Started development
