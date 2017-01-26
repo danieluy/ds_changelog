@@ -1,5 +1,7 @@
+# Comment just because I can ;)
 v0.1.0
-	20170124 | + | Started the styles
+	20170125 | + | Added form to add new log entries
+	20170124 | + | Started the UX
 	20170124 | + | Started the architecture definition
 	20170124 | - | Removed files.js dependency, replaced it with fs module directly
 	20170123 | + | Added Electron.js

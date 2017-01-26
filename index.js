@@ -15,10 +15,26 @@ const app = {
   DOMCache: function () {
     this.input_file = document.getElementById('input-file');
     this.log_entries_list = document.getElementById('log-entries-list');
+    this.btn_new_entry = document.getElementById('btn-new-entry');
+    // Form add log entry
+    this.form_add_log_entry = document.getElementById('form-add-log-entry');
+    this.new_log_entry_type = document.getElementById('new-log-entry-type');
+    this.new_log_entry_message = document.getElementById('new-log-entry-message');
+    this.new_log_entry_date = document.getElementById('new-log-entry-date');
+    this.btn_new_log_entry = document.getElementById('btn-new-log-entry');
+    this.btn_cancel_log_entry = document.getElementById('btn-cancel-log-entry');
     this.DOMListeners();
   },
   DOMListeners: function () {
+    this.btn_new_entry.addEventListener('click', this.displaylogEntryForm.bind(this));
     this.input_file.addEventListener('change', this.openFile.bind(this));
+  },
+  displaylogEntryForm() {
+    this.form_add_log_entry.parentNode.classList.remove('hidden');
+    this.new_log_entry_date.value = new Date("2017-01-25");
+  },
+  addlogEntry: function () {
+
   },
   openFile: function (evt) {
     if (!this.open_file) {
@@ -61,15 +77,7 @@ const app = {
           li.innerHTML = version;
           ul.appendChild(li);
         }
-        let li = document.createElement('li');
-        if (this.log_entries[i].type === 'TODO')
-          li.setAttribute('class', 'list-item');
-        if (this.log_entries[i].type === '+')
-          li.setAttribute('class', 'list-item plus');
-        if (this.log_entries[i].type === '-')
-          li.setAttribute('class', 'list-item minus');
-        li.innerHTML = this.log_entries[i].view();
-        ul.appendChild(li);
+        ul.appendChild(this.log_entries[i].view(i));
       }
       this.log_entries_list.appendChild(ul);
     }

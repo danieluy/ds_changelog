@@ -16,7 +16,7 @@ File.prototype.parseContent = function (str_content) {
   str_content.split('\n')
     // .map(line => line.trim())
     .forEach(line => {
-      if (line !== '') {
+      if (line !== '' && line.charAt(0) !== '#') {
         if (line.match(/v\d+\.\d+\.\d+/)) {
           v = line;
           json[line] = [];
