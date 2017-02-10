@@ -3,19 +3,19 @@ const path = require('path');
 
 const importFile = (route, file) => {
     let json = {};
-    let v = undefined;
+    let version = undefined;
     fs.readFileSync(path.join(route, file), 'UTF-8')
         .split('\n')
         // .map(line => line.trim())
         .forEach(line => {
-            if (line !== '') {
+            if (line !== '' || !line.trim().match(/^#.*/)) {
                 if (line.match(/v\d+\.\d+\.\d+/)) {
-                    v = line;
+                    version = line.trim();
                     json[line] = [];
                 }
                 else {
                     let data = line.split('|')
-                    json[v].push({ date: data[0].trim(), type: data[1].trim(), message: data[2].trim() })
+                    json[version].push({ date: data[0].trim(), type: data[1].trim(), message: data[2].trim() })
                 }
             }
         });

@@ -9,22 +9,22 @@
 
 <body>
   <nav>
-    <h1>Changelog manager</h1>
+    <h1>Changelog editor</h1>
 
     <label for="input-file" title="Open log file">
-    <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="none"/>
-      <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
-    </svg>
-  </label>
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
+      </svg>
+    </label>
     <input type="file" id="input-file" hidden/>
 
     <label for="btn-new-entry" title="New log entry">
-    <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/>
-    </svg>
-  </label>
+      <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M14 10H2v2h12v-2zm0-4H2v2h12V6zm4 8v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM2 16h8v-2H2v2z"/>
+      </svg>
+    </label>
     <button id="btn-new-entry" hidden></button>
 
   </nav>
@@ -42,10 +42,10 @@
       <label for="new-log-entry-type">Type *</label>
       <select id="new-log-entry-type">
         <option value="+">Add</option>
-        <option value="BUG">Bug</option>
-        <option value="BUG FIX">Bug fix</option>
-        <option value="TODO" selected>ToDo</option>
+        <option value="B">Bug</option>
+        <option value="F">Bug fix</option>
         <option value="-">Remove</option>
+        <option value="T" selected>ToDo</option>
       </select>
       <label for="new-log-entry-message">Message *</label>
       <input id="new-log-entry-message" type="text" placeholder="Entry description">
@@ -59,7 +59,9 @@
   </div>
 
   <!--Main script loading-->
-  <script>require('./index.js')</script>
+  <script>
+    require('./index.js')
+  </script>
 </body>
 
 </html>

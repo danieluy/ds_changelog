@@ -1,7 +1,6 @@
 const { ipcRenderer } = require('electron');
 const fs = require('fs');
-const File = require('./file.class.js');
-const LogEntry = require('./log-entry.class.js');
+const File = require('./classes/file');
 // const files = require('./files.js');
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -47,9 +46,8 @@ const app = {
           type: evt.target.files[0].type,
           content: fs.readFileSync(evt.target.files[0].path, 'UTF-8')
         })
-        console.log(this.open_file.content)
-        this.log_entries = this.open_file.logEntries();
-        this.render.logEntriesByVersion.call(this)
+        console.log(this.open_file)
+        this.render.logEntries.call(this);
       }
       else {
         alert('Unsupported file type')
@@ -60,27 +58,16 @@ const app = {
     }
   },
   render: {
-    logEntriesByVersion: function () {
+    logEntries: function () {
       this.log_entries_list.innerHTML = '';
       let ul = document.createElement('ul');
       ul.setAttribute('class', 'entry-list');
-      let version = this.log_entries[0].version;
-      let li = document.createElement('li');
-      li.setAttribute('class', 'list-title');
-      li.innerHTML = version;
-      ul.appendChild(li);
-      for (let i = 0; i < this.log_entries.length; i++) {
-        if (this.log_entries[i].version !== version) {
-          let li = document.createElement('li');
-          li.setAttribute('class', 'list-title');
-          version = this.log_entries[i].version;
-          li.innerHTML = version;
-          ul.appendChild(li);
-        }
-        ul.appendChild(this.log_entries[i].view(i));
+      ul.classList.add('entry-list');
+      for (let key in this.open_file.entries) {
+        for (let i = 0; i < this.open_file.entries[key].length; i++)
+          ul.appendChild(this.open_file.entries[key][i].view(i));
       }
       this.log_entries_list.appendChild(ul);
     }
   }
 }
-

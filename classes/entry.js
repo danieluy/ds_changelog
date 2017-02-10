@@ -1,19 +1,19 @@
 "use strict";
 
-const LogEntry = function (values) {
+const Entry = function (values) {
     this.version = values.version;
     this.type = values.type;
     this.date = values.date;
     this.message = values.message;
 }
-LogEntry.prototype.view = function (index) {
+Entry.prototype.view = function (index) {
     let li = document.createElement('li');
     li.setAttribute('class', this.classList());
     li.innerHTML = this.message;
     li.setAttribute('data-i', index);
     return li;
 }
-LogEntry.prototype.classList = function () {
+Entry.prototype.classList = function () {
     let class_list = 'list-item';
     switch (this.type) {
         case '+':
@@ -37,4 +37,4 @@ LogEntry.prototype.classList = function () {
     return class_list;
 }
 
-module.exports = LogEntry;
+module.exports = Entry;

@@ -1,5 +1,7 @@
 # Comment just because I can ;)
 v0.1.0
+	20170210 | B1 | Classes for types are not showing
+	20170210 | + | File now handles its own state
 	20170125 | + | Added form to add new log entries
 	20170124 | + | Started the UX
 	20170124 | + | Started the architecture definition
