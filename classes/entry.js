@@ -8,33 +8,11 @@ const Entry = function (values) {
 }
 Entry.prototype.view = function (index) {
     let li = document.createElement('li');
-    li.setAttribute('class', this.classList());
+    li.classList.add(`list-item`);
+    li.classList.add(`${this.type.toLowerCase()}`);
     li.innerHTML = this.message;
     li.setAttribute('data-i', index);
     return li;
-}
-Entry.prototype.classList = function () {
-    let class_list = 'list-item';
-    switch (this.type) {
-        case '+':
-            class_list += ' plus';
-            break;
-        case '-':
-            class_list += ' minus';
-            break;
-        case 'TODO':
-            class_list += '';
-            break;
-        case 'BUG':
-            class_list += '';
-            break;
-        case 'BUG FIX':
-            class_list += '';
-            break;
-        default:
-            break;
-    }
-    return class_list;
 }
 
 module.exports = Entry;

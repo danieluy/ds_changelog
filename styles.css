@@ -26,10 +26,10 @@ body{
     background-color: #555;
     border-bottom: 1px solid #333
 }
-.list-item.plus{
+.list-item.p{
     background-color: #585
 }
-.list-item.minus{
+.list-item.m{
     background-color: #855
 }
 

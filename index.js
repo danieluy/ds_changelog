@@ -37,21 +37,16 @@ const app = {
   },
   openFile: function (evt) {
     if (!this.open_file) {
-      if (evt.target.files[0].type === 'text/plain') {
-        this.open_file = new File({
-          lastModified: evt.target.files[0].lastModified,
-          name: evt.target.files[0].name,
-          path: evt.target.files[0].path,
-          size: evt.target.files[0].size,
-          type: evt.target.files[0].type,
-          content: fs.readFileSync(evt.target.files[0].path, 'UTF-8')
-        })
-        console.log(this.open_file)
-        this.render.logEntries.call(this);
-      }
-      else {
-        alert('Unsupported file type')
-      }
+      this.open_file = new File({
+        lastModified: evt.target.files[0].lastModified,
+        name: evt.target.files[0].name,
+        path: evt.target.files[0].path,
+        size: evt.target.files[0].size,
+        type: evt.target.files[0].type,
+        content: fs.readFileSync(evt.target.files[0].path, 'UTF-8')
+      })
+      console.log(this.open_file)
+      this.render.logEntries.call(this);
     }
     else {
       alert('A file is already open')
