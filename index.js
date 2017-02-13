@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 const app = {
+  sort_criteria: undefined,
   init: function () {
     this.DOMCache();
   },
@@ -58,10 +59,17 @@ const app = {
       let ul = document.createElement('ul');
       ul.setAttribute('class', 'entry-list');
       ul.classList.add('entry-list');
-      for (let key in this.open_file.entries) {
-        for (let i = 0; i < this.open_file.entries[key].length; i++)
-          ul.appendChild(this.open_file.entries[key][i].view(i));
+      let entries = [];
+      switch (this.sort_criteria) {
+        case 'type':
+          entries = this.open_file.entriesByType();
+          break;
+        default:
+          entries = this.open_file.entriesByDate();
+          break;
       }
+      for (var i = 0; i < entries.length; i++)
+        ul.appendChild(entries[i].view(i));
       this.log_entries_list.appendChild(ul);
     }
   }

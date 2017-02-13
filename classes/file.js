@@ -38,5 +38,24 @@ File.prototype.parseContent = function (str_content) {
     });
   return entries;
 }
+File.prototype.entriesByType = function () {
+  const ret = [];
+  for (let key in this.entries) {
+    for (let i = 0; i < this.entries[key].length; i++)
+      ret.push(this.entries[key][i]);
+  }
+  return ret;
+}
+File.prototype.entriesByDate = function () {
+  const ret = [];
+  for (let key in this.entries) {
+    for (let i = 0; i < this.entries[key].length; i++)
+      ret.push(this.entries[key][i]);
+    ret.sort(entry => {
+      return parseInt(entry.date)
+    })
+  }
+  return ret;
+}
 
 module.exports = File;
