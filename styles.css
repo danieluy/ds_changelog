@@ -13,15 +13,61 @@ body{
    font-size: 16px;
    background-color: #333;
 }
-.entry-list{
+
+/*--  Navbar  -----------------------------------------------------------------*/
+nav.main{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    width: 100%;
+    background-color: #555;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .5)
+}
+.app-title{
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 0 10px;
+    color: #000;
+}
+.nav-item{
+    height: 100%;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/*--  Wapper  -----------------------------------------------------------------*/
+.wrapper{
+    position: fixed;
+    top: 60px;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    height: calc(100vh - 60px);
+    padding: 20px 0;
+    overflow-y: auto;
+}
+.entry-list,
+.todos-list{
+    padding: 0 20px;
     list-style-type: none;
-    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
 }
 .list-title{
     font-size: 2rem;
 }
 .list-item{
-    display: block;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     padding: 15px;
     background-color: #555;
     border-bottom: 1px solid #333
@@ -30,7 +76,21 @@ body{
     background-color: #585
 }
 .list-item.m{
-    background-color: #855
+    background-color: #855;
+}
+.actions-wrapper{
+    margin-left: 15px;
+}
+.btn-close{
+    height: 100%;
+    background-color: transparent;
+    border-style: none;
+    color: rgba(0, 0, 0, .5);
+    cursor: pointer;
+}
+.deleted{
+    text-decoration: line-through;
+    background-color: transparent !important;
 }
 
 /*--  Form  -----------------------------------------------------------------*/
@@ -130,4 +190,26 @@ h2{
 /*--  Placeholders  -----------------------------------------------------------------*/
 ::-webkit-input-placeholder {
   color: #ccc;
+}
+
+
+/*Medium devices Desktops (<1200px)########################################################################################################################*/
+@media screen and (max-width: 1200px){
+}
+
+/*Small devices Tablets (<1024px)########################################################################################################################*/
+@media screen and (max-width: 1024px){
+    .wrapper{
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .entry-list,
+    .todos-list{
+        padding: 10px;
+        list-style-type: none;
+    }
+}
+
+/*Extra small devices Phones  (<768px)########################################################################################################################*/
+@media screen and (max-width: 768px){
 }
