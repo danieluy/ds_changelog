@@ -1,5 +1,6 @@
 # Comment just because I can ;)
 v0.1.0
+	20170215 | + | Added React blank application
 	20170214 | + | UI improvements
 	20170214 | + | lots of changes, no time to register
 	20170212 | F1 | The class Entry now handles the whole view
