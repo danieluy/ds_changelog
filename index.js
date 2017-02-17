@@ -53,9 +53,8 @@ const app = {
   },
   saveFile: function () {
     if (this.open_file) {
-      const content = this.open_file.toSave();
-      console.log('' + this.open_file.origin.path)
-      fs.writeFileSync(this.open_file.origin.path + '_1', content, 'UTF-8')
+      fs.writeFileSync(this.open_file.origin.path + '_1', this.open_file.toSave(), 'UTF-8');
+      alert('File successfully saved');
     }
   },
   deleteEntry: function (index) {
@@ -71,21 +70,49 @@ const app = {
       let ul_todos = document.createElement('ul');
       ul_todos.classList.add('todos-list');
       let entries = this.sortEntries();
-      for (var i = 0; i < entries.length; i++)
-        if (entries[i].type !== 'T')
-          ul_entries.appendChild(entries[i].view(i));
-        else
-          ul_todos.appendChild(entries[i].view(i));
+      console.log('this.sortEntries();', entries)
+      for (var key in entries) {
+        console.log(key)
+        if (key === '00000000')
+          for (let i = 0; i < entries[key].length; i++)
+            ul_todos.appendChild(entries[key][i].view(i));
+        else {
+          let group = document.createElement('div');
+          group.innerHTML = key;
+          ul_entries.appendChild(group);
+          for (let i = 0; i < entries[key].length; i++) {
+            ul_entries.appendChild(entries[key][i].view(i));
+          }
+        }
+      }
       this.todos_list.appendChild(ul_todos);
       this.entries_list.appendChild(ul_entries);
     }
+    // logEntries: function () {
+    //   this.todos_list.innerHTML = '';
+    //   this.entries_list.innerHTML = '';
+    //   let ul_entries = document.createElement('ul');
+    //   ul_entries.classList.add('entry-list');
+    //   let ul_todos = document.createElement('ul');
+    //   ul_todos.classList.add('todos-list');
+    //   let entries = this.sortEntries();
+    //   for (var i = 0; i < entries.length; i++)
+    //     if (entries[i].type !== 'T')
+    //       ul_entries.appendChild(entries[i].view(i));
+    //     else
+    //       ul_todos.appendChild(entries[i].view(i));
+    //   this.todos_list.appendChild(ul_todos);
+    //   this.entries_list.appendChild(ul_entries);
+    // }
   },
   sortEntries: function () {
     switch (this.sort_criteria) {
       case 'type':
         return this.open_file.entriesByType();
-      default:
+      case 'date':
         return this.open_file.entriesByDate();
+      default:
+        return this.open_file.entriesByVersion();
     }
   }
 }

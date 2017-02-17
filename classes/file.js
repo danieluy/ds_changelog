@@ -1,6 +1,11 @@
 "use strict";
 
-const Entry = require('./entry');
+const Todo = require('./todo');
+const Plus = require('./plus');
+const Minus = require('./minus');
+const Refactoring = require('./refactoring');
+const Bug = require('./bug');
+const Fix = require('./fix');
 
 const File = function (values) {
   this.origin = {
@@ -14,104 +19,37 @@ const File = function (values) {
   this.title = null;
   this.versions = [];
   this.entries = this.parseContent(values.content);
-  this.state = [];
+  this.state = {
+    history: []
+  };
 }
 File.prototype.toSave = function () {
-  return `
-  [Radiocero Premios]
+  let str_data =
+    `[${this.title}]
 
-  # T - todo
-  # P - plus
-  # M - minus
-  # R - refactoring
-  # B - bug
-  # F - fix
+#   ${new Date().toString()}
 
-  # ToDo
-    00000000 | T | Test winner.js => hasWonSinceThreeMonths()
-    00000000 | T | Filter prizes by due date and stock
-    00000000 | T | On prize creation check due_date >= set_date
-    00000000 | T | Change administrator password, or allow it to be changed from UI
-    00000000 | T | cancelHandOverPrize() on backend
-  v0.7.0
-  # deployed
-    20170207 | P | Prize.edit() now uses Prize.checkInputData() instead of just checking if the data was provided
-    20170203 | R | Added Prize.checkInputData() to re-use this functionality
-    20170203 | R | Completely redone the prizes instantiation checks
-    20170131 | P | Added verification for periodic parameter on Prize class
-    20170131 | R | Prize class to have its methods declared through its prototype
-  v0.6.2
-    20170130 | R | Prize class to use this keyword
-    20170130 | P | Added periodic: boolean to Prize class
-    20170130 | P | Added total_handed:number to Prize class
-  # deployed
-  v0.6.1
-    20170129 | P | Updated and improved the README.md
-    20170129 | P | Greatly improved the CLI UX
-    20170129 | P | Moved to a fresh repository
-    20170129 | M | Removed unused dependencies
-  # commited & pushed
-  v0.6.0
-    20170125 | P | Added /prizes/edit api_router route and method
-    20170125 | P | Added Prize.edit() method
-    20170116 | P | Added method to check if a winner has won in the last three months
-    20170113 | P | Added ng-client
-    20170113 | M | Removed old client
-    20170110 | M | Removed the json-api router
-    20170108 | P | Authentication enabled
-    20161222 | P | Added /json/winners/handprize method to json-api-router.js
-  # commited & pushed
-  v0.5.1
-    20161221 | P | Started a new client app based on Angular 2
-    20161221 | F | set_date on users was assigned as due_date and consequently it defaulted to the instantiation date
-  # commited & pushed
-  v0.5.0
-    19700101 | F | everything about the prize's stock is broken, assigning prizes is working now, stock management included ;)
-    19700101 | P | Added prize handing over functionality on backend
-    19700101 | P | When adding a new prize, the prize's list in now updated
-    19700101 | P | Added administrator account creation on first boot
-    19700101 | P | Added users management, without server side checks
-  # commited & pushed
-  v0.4.4
-    19700101 | P | Added ejs partials
-    19700101 | F | Solved a bug on index.js that was sending non UTC date to the server
-    19700101 | F | Solved a bug on index.js that didn't refresh the content position when the window was resized
-    19700101 | P | Added the form to grant prizes
-    19700101 | P | Added Winners module
-    19700101 | P | Added info_hub actions
-    19700101 | F | Solved grantPrize() on fontend's winner.js
-    19700101 | F | Solved Dates and comments displaying even if they are null
-    19700101 | B | everything about the prizes stock is broken!!!!
-  # commited & pushed
-  v0.4.3
-    19700101 | P | Added tab navigation
-    19700101 | P | Added User's list style
-    19700101 | P | Added new navigation system
-    19700101 | P | Added DS-Spinners
-    19700101 | P | Added delay option to ds-ajax.js
-  # commited & pushed
-  v0.4.2
-    19700101 | P | Added Form's UI design
-    19700101 | P | Added suggested prize types from the existing prize types in the database
-    19700101 | P | The method findAll at prizes.js and users.js now returns an empty Array instead of null when there is no results
-    19700101 | P | Added PUT method to ds_ajax.js
-    19700101 | P | Added date format control in the prizes.js module
-    19700101 | P | Added :valid and :invalid pseudo classes style to input, textarea and select tags within div.content-form
-    19700101 | P | Added info-hub to display messages
-    19700101 | P | New prize's UI to back-end connection finished
-    19700101 | P | Refined forms UI
-    19700101 | P | Added resert functionallity to forms
-  # commited & pushed
-  v0.4.1
-    19700101 | P | Added concurrently dev-dependency to run MongoDB along with app.js
-    19700101 | P | Started to normalize sintaxis
-    19700101 | P | Current status of modules users.js and prizes.js was correctly tested
-  `
+#   T - todo          #
+#   P - plus          #
+#   M - minus         #
+#   R - refactoring   #
+#   B - bug           #
+#   F - fix           #
+
+`
+
+  for (let key in this.entries) {
+    this.entries[key].forEach(entry => {
+      str_data += entry.toString();
+    })
+  }
+
+  return str_data
 }
 File.prototype.parseContent = function (str_content) {
   let json = {};
   let version = undefined;
-  const entries = { T: [], P: [], M: [], R: [], B: [], F: [] };
+  const entries = [];
   let id = 0;
   str_content.split('\n')
     .map(line => line.trim())
@@ -125,64 +63,87 @@ File.prototype.parseContent = function (str_content) {
         }
         else {
           let data = line.split('|')
-          const entry = new Entry({ id: ++id, version: version, date: data[0].trim(), type: data[1].trim(), message: data[2].trim() });
-          entries[entry.type].push(entry)
+          entries.push(this.newEntry({ id: ++id, version: version, date: data[0].trim(), type: data[1].trim(), message: data[2].trim() }))
         }
       }
     });
   return entries;
 }
-File.prototype.entriesByType = function () {
-  const ret = [];
-  for (let key in this.entries) {
-    for (let i = 0; i < this.entries[key].length; i++)
-      ret.push(this.entries[key][i]);
-  }
+File.prototype.entriesByVersion = function () {
+  const ret = {};
+  this.entries.forEach(entry => {
+    console.log('entry.version', entry.version)
+    if (!ret.hasOwnProperty(entry.version))
+      ret[entry.version] = [];
+    ret[entry.version].push(entry);
+  })
   return ret;
+}
+File.prototype.entriesByType = function () {
+  // const ret = [];
+  // for (let key in this.entries) {
+  //   for (let i = 0; i < this.entries[key].length; i++)
+  //     ret.push(this.entries[key][i]);
+  // }
+  // return ret;
 }
 File.prototype.entriesByDate = function () {
-  const ret = [];
-  for (let key in this.entries) {
-    for (let i = 0; i < this.entries[key].length; i++)
-      ret.push(this.entries[key][i]);
-    ret.sort(entry => {
-      return parseInt(entry.date)
-    })
-  }
-  return ret;
+  // const ret = [];
+  // for (let key in this.entries) {
+  //   for (let i = 0; i < this.entries[key].length; i++)
+  //     ret.push(this.entries[key][i]);
+  //   ret.sort(entry => {
+  //     return parseInt(entry.date)
+  //   })
+  // }
+  // return ret;
 }
 File.prototype.deleteEntry = function (index) {
-  this.setHistory();
-  let deleted = false;
-  for (let key in this.entries) {
-    if (deleted)
-      break;
-    let i = 0;
-    while (!deleted && i < this.entries[key].length) {
-      // console.log(`${this.entries[key][i].id} === ${index} - ${this.entries[key][i].id === index}`)
-      if (this.entries[key][i].id === index) {
-        this.entries[key][i].status = 0;
-        deleted = true;
-      }
-      i++
-    }
-  }
+  // this.setHistory();
+  // let deleted = false;
+  // for (let key in this.entries) {
+  //   if (deleted)
+  //     break;
+  //   let i = 0;
+  //   while (!deleted && i < this.entries[key].length) {
+  //     if (this.entries[key][i].id === index) {
+  //       this.entries[key][i].status = 0;
+  //       deleted = true;
+  //     }
+  //     i++
+  //   }
+  // }
 }
 File.prototype.setHistory = function () {
-  const aux = { T: [], P: [], M: [], R: [], B: [], F: [] };
-  for (let key in this.entries) {
-    this.entries[key].forEach(entry => {
-      aux[key].push(new Entry({
-        id: entry.id,
-        version: entry.version,
-        type: entry.type,
-        date: entry.date,
-        message: entry.message,
-        status: entry.status
-      }))
-    })
-  }
-  return;
+  // const aux = { T: [], P: [], M: [], R: [], B: [], F: [] };
+  // for (let key in this.entries) {
+  //   this.entries[key].forEach(entry => {
+  //     aux[key].push(this.newEntry({
+  //       id: entry.id,
+  //       version: entry.version,
+  //       type: entry.type,
+  //       date: entry.date,
+  //       message: entry.message,
+  //       status: entry.status
+  //     }))
+  //   })
+  // }
+  // this.state.history.push(aux);
+  // return this.state.history.length;
+}
+File.prototype.newEntry = function (values) {
+  if (values.type === 'T')
+    return new Todo(values);
+  if (values.type === 'P')
+    return new Plus(values);
+  if (values.type === 'M')
+    return new Minus(values);
+  if (values.type === 'R')
+    return new Refactoring(values);
+  if (values.type === 'B')
+    return new Bug(values);
+  if (values.type === 'F')
+    return new Fix(values);
 }
 
 module.exports = File;

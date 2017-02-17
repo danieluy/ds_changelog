@@ -1,5 +1,8 @@
 # Comment just because I can ;)
 v0.1.0
+	20170217 | R | Sorting methods now return Object with a key for each different value of the sorting criteria
+	20170217 | R | Entry list in File is now an array
+	20170217 | + | Added a class for every entry type that inherits from Entry
 	20170215 | + | Added React blank application
 	20170214 | + | UI improvements
 	20170214 | + | lots of changes, no time to register
