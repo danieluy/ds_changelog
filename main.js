@@ -1,7 +1,7 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron')
 const path = require('path')
 const url = require('url')
-const files = require('./files.js')
+const fs = require('fs');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,6 +17,53 @@ function createWindow() {
     protocol: 'file:',
     slashes: true
   }))
+  // win.setMenu(null);
+
+  const menuTemplate = [
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'Open File...',
+          click: () => {
+            openFile();
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Save',
+          click: () => {
+            console.log('Save File!');
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Quit',
+          click: () => {
+            app.quit();
+          }
+        }
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        {
+          label: 'Toggle Developer Tools',
+          click: () => {
+            win.webContents.toggleDevTools()
+          }
+        }
+      ]
+    }
+  ];
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
+
 
   // Open the DevTools.
   win.webContents.openDevTools()
@@ -55,12 +102,23 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
+function openFile() {
+  dialog.showOpenDialog(function (filePaths) {
+    console.log('filePath', filePaths[0])
+    if (filePaths)
+      win.webContents.send('openFile', filePaths[0]);
+    else
+      alert('Please select a file')
+  });
+}
+
 ipcMain.on('asynchronous-message', (event, arg) => {
   console.log(arg)  // prints "ping"
   event.sender.send('asynchronous-reply', 'pong')
 })
 
-ipcMain.on('synchronous-message', (event, arg) => {
-  event.returnValue = files.importFile(__dirname, 'changelog.txt');
+ipcMain.on('openFile', (event, arg) => {
+  openFile();
+  event.sender.send('openFile-reply')
 })
 

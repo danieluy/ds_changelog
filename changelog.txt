@@ -1,5 +1,8 @@
-# Comment just because I can ;)
+[DS Changelog]
 v0.1.0
+	20170217 | + | File opening functionality now gets the file path from the main process using the system's open file dialog
+	20170217 | + | Added personalized app menu
+	20170217 | - | Default app menu removed
 	20170217 | R | Sorting methods now return Object with a key for each different value of the sorting criteria
 	20170217 | R | Entry list in File is now an array
 	20170217 | + | Added a class for every entry type that inherits from Entry

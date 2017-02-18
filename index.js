@@ -13,7 +13,7 @@ const app = {
     this.DOMCache();
   },
   DOMCache: function () {
-    this.input_file = document.getElementById('input-file');
+    this.btn_open_file = document.getElementById('btn-open-file');
     this.entries_list = document.getElementById('entries-list');
     this.btn_new_entry = document.getElementById('btn-new-entry');
     this.btn_save = document.getElementById('btn-save');
@@ -29,7 +29,7 @@ const app = {
   },
   DOMListeners: function () {
     this.btn_new_entry.addEventListener('click', this.displaylogEntryForm.bind(this));
-    this.input_file.addEventListener('change', this.openFile.bind(this));
+    this.btn_open_file.addEventListener('click', this.callOpenFile);
     this.btn_save.addEventListener('click', this.saveFile.bind(this));
   },
   displaylogEntryForm() {
@@ -39,16 +39,14 @@ const app = {
   addlogEntry: function () {
 
   },
-  openFile: function (evt) {
+  callOpenFile: function () {
+    ipcRenderer.send('openFile');
+  },
+  openFile: function (path) {
     this.open_file = new File({
-      lastModified: evt.target.files[0].lastModified,
-      name: evt.target.files[0].name,
-      path: evt.target.files[0].path,
-      size: evt.target.files[0].size,
-      type: evt.target.files[0].type,
-      content: fs.readFileSync(evt.target.files[0].path, 'UTF-8')
+      path: path,
+      content: fs.readFileSync(path, 'UTF-8')
     })
-    console.log(this.open_file)
     this.render.logEntries.call(this);
   },
   saveFile: function () {
@@ -72,8 +70,7 @@ const app = {
       let entries = this.sortEntries();
       console.log('this.sortEntries();', entries)
       for (var key in entries) {
-        console.log(key)
-        if (key === '00000000')
+        if (key === 'ToDo')
           for (let i = 0; i < entries[key].length; i++)
             ul_todos.appendChild(entries[key][i].view(i));
         else {
@@ -118,3 +115,8 @@ const app = {
 }
 
 app.init();
+
+ipcRenderer.on('openFile', (event, path) => {
+  console.log('path', path)
+  app.openFile(path);
+});

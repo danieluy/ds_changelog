@@ -1,2 +1,2 @@
-# ds_changelog
+# DS Changelog
 Changelog manager

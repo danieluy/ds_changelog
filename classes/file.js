@@ -17,7 +17,7 @@ const File = function (values) {
     content: values.content
   }
   this.title = null;
-  this.versions = [];
+  // this.versions = [];
   this.entries = this.parseContent(values.content);
   this.state = {
     history: []
@@ -36,7 +36,7 @@ File.prototype.toSave = function () {
 #   B - bug           #
 #   F - fix           #
 
-`
+# ToDo`
 
   for (let key in this.entries) {
     this.entries[key].forEach(entry => {
@@ -48,7 +48,7 @@ File.prototype.toSave = function () {
 }
 File.prototype.parseContent = function (str_content) {
   let json = {};
-  let version = undefined;
+  let version = 'ToDo';
   const entries = [];
   let id = 0;
   str_content.split('\n')
@@ -59,7 +59,7 @@ File.prototype.parseContent = function (str_content) {
           this.title = line.slice(1).slice(0, -1);
         else if (line.match(/v\d+\.\d+\.\d+/)) {
           version = line.trim();
-          this.versions.push(version);
+          // this.versions.push(version);
         }
         else {
           let data = line.split('|')
@@ -72,7 +72,6 @@ File.prototype.parseContent = function (str_content) {
 File.prototype.entriesByVersion = function () {
   const ret = {};
   this.entries.forEach(entry => {
-    console.log('entry.version', entry.version)
     if (!ret.hasOwnProperty(entry.version))
       ret[entry.version] = [];
     ret[entry.version].push(entry);
