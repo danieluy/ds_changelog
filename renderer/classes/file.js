@@ -8,14 +8,8 @@ const Bug = require('./bug');
 const Fix = require('./fix');
 
 const File = function (values) {
-  this.origin = {
-    lastModified: values.lastModified,
-    name: values.name,
-    path: values.path,
-    size: values.size,
-    type: values.type,
-    content: values.content
-  }
+  this.path = values.path;
+  this.content = values.content;
   this.title = null;
   // this.versions = [];
   this.entries = this.parseContent(values.content);
@@ -36,11 +30,24 @@ File.prototype.toSave = function () {
 #   B - bug           #
 #   F - fix           #
 
-# ToDo`
+# ToDo
+`
 
-  for (let key in this.entries) {
-    this.entries[key].forEach(entry => {
-      str_data += entry.toString();
+  const aux = {};
+  this.entries.forEach(entry => {
+    if (!aux.hasOwnProperty(entry.version))
+      aux[entry.version] = [];
+    if (entry.status !== 'deleted')
+      aux[entry.version].push(entry);
+  })
+
+  for (let key in aux) {
+    console.log(key, aux[key].length)
+    if (key !== 'ToDo' && aux[key].length)
+      str_data += `${key}\n`;
+    aux[key].forEach(entry => {
+      if (entry.status !== 'deleted')
+        str_data += entry.toString();
     })
   }
 
@@ -57,13 +64,17 @@ File.prototype.parseContent = function (str_content) {
       if (line !== '' && line.charAt(0) !== '#') {
         if (line.match(/\[.+\]/))
           this.title = line.slice(1).slice(0, -1);
-        else if (line.match(/v\d+\.\d+\.\d+/)) {
+        else if (line.match(/v\d+\.\d+\.\d+/))
           version = line.trim();
-          // this.versions.push(version);
-        }
         else {
-          let data = line.split('|')
-          entries.push(this.newEntry({ id: ++id, version: version, date: data[0].trim(), type: data[1].trim(), message: data[2].trim() }))
+          let line_data = line.split('|')
+          entries.push(this.newEntry({
+            id: ++id,
+            version: version,
+            date: line_data[0].trim(),
+            type: line_data[1].trim(),
+            message: line_data[2].trim()
+          }))
         }
       }
     });
@@ -97,38 +108,30 @@ File.prototype.entriesByDate = function () {
   // }
   // return ret;
 }
-File.prototype.deleteEntry = function (index) {
-  // this.setHistory();
-  // let deleted = false;
-  // for (let key in this.entries) {
-  //   if (deleted)
-  //     break;
-  //   let i = 0;
-  //   while (!deleted && i < this.entries[key].length) {
-  //     if (this.entries[key][i].id === index) {
-  //       this.entries[key][i].status = 0;
-  //       deleted = true;
-  //     }
-  //     i++
-  //   }
-  // }
+File.prototype.deleteEntry = function (id) {
+  this.setHistory();
+  let deleted = false, i = 0;
+  while (!deleted && i < this.entries.length) {
+    console.log(this.entries[i].id === id)
+    if (this.entries[i].id === id) {
+      this.entries[i].status = 'deleted';
+      deleted = true;
+    }
+    i++;
+  }
+  return;
 }
 File.prototype.setHistory = function () {
-  // const aux = { T: [], P: [], M: [], R: [], B: [], F: [] };
-  // for (let key in this.entries) {
-  //   this.entries[key].forEach(entry => {
-  //     aux[key].push(this.newEntry({
-  //       id: entry.id,
-  //       version: entry.version,
-  //       type: entry.type,
-  //       date: entry.date,
-  //       message: entry.message,
-  //       status: entry.status
-  //     }))
-  //   })
-  // }
-  // this.state.history.push(aux);
-  // return this.state.history.length;
+  const aux = this.entries.map(entry => this.newEntry({
+    id: entry.id,
+    version: entry.version,
+    type: entry.type,
+    date: entry.date,
+    message: entry.message,
+    status: entry.status
+  }))
+  this.state.history.push(aux);
+  return this.state.history.length;
 }
 File.prototype.newEntry = function (values) {
   if (values.type === 'T')

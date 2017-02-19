@@ -16,19 +16,21 @@ Refactoring.prototype.view = function (index) {
     li.classList.add(`list-item`);
     li.classList.add(`${this.type.toLowerCase()}`);
     li.innerHTML = this.message;
-    if(this.status === 0)
-        li.classList.add('deleted');
+    li.classList.add(this.status);
 
-    let actions = document.createElement('div');
-    actions.classList.add('actions-wrapper');
+    if (this.status !== 'deleted') {
+        let actions = document.createElement('div');
+        actions.classList.add('actions-wrapper');
 
-    let close = document.createElement('button');
-    close.innerHTML = '&#10006';
-    close.classList.add('btn-close');
-    close.setAttribute('onclick', `app.deleteEntry(${this.id})`);
-    actions.appendChild(close);
+        let close = document.createElement('button');
+        close.innerHTML = '&#10006';
+        close.classList.add('btn-close');
+        close.setAttribute('onclick', `app.deleteEntry(${this.id})`);
+        actions.appendChild(close);
+        
+        li.appendChild(actions);
+    }
 
-    li.appendChild(actions);
     return li;
 }
 

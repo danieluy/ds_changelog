@@ -4,7 +4,7 @@
   "description": "Changelog manager",
   "main": "main.js",
   "scripts": {
-    "start": "electron main.js",
+    "start": "electron ./main/main.js",
     "test": "mocha --timeout 2000"
   },
   "repository": {

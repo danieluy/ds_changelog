@@ -1,5 +1,10 @@
 [DS Changelog]
 v0.1.0
+	20170219 | + | Implemented save functionality
+	20170219 | + | Implemented delete functionality
+	20170219 | + | Implemented developer tools toggle (F12) and refresh (F5) shortcuts
+	20170219 | + | Added menu-template.js dependency
+	20170219 | R | Separated files for main and renderer process in different folders
 	20170217 | + | File opening functionality now gets the file path from the main process using the system's open file dialog
 	20170217 | + | Added personalized app menu
 	20170217 | - | Default app menu removed

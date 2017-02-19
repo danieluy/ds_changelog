@@ -50,13 +50,16 @@ const app = {
     this.render.logEntries.call(this);
   },
   saveFile: function () {
-    if (this.open_file) {
-      fs.writeFileSync(this.open_file.origin.path + '_1', this.open_file.toSave(), 'UTF-8');
-      alert('File successfully saved');
-    }
+    if (this.open_file)
+      fs.writeFile(this.open_file.path + '_test', this.open_file.toSave(), 'UTF-8', (err) => {
+        if (err) {
+          console.error(err);
+          alert(`File couldn't be saved`);
+        }
+      });
   },
-  deleteEntry: function (index) {
-    this.open_file.deleteEntry(index);
+  deleteEntry: function (id) {
+    this.open_file.deleteEntry(id);
     this.render.logEntries.call(this);
   },
   render: {
@@ -68,7 +71,6 @@ const app = {
       let ul_todos = document.createElement('ul');
       ul_todos.classList.add('todos-list');
       let entries = this.sortEntries();
-      console.log('this.sortEntries();', entries)
       for (var key in entries) {
         if (key === 'ToDo')
           for (let i = 0; i < entries[key].length; i++)
@@ -77,30 +79,13 @@ const app = {
           let group = document.createElement('div');
           group.innerHTML = key;
           ul_entries.appendChild(group);
-          for (let i = 0; i < entries[key].length; i++) {
+          for (let i = 0; i < entries[key].length; i++)
             ul_entries.appendChild(entries[key][i].view(i));
-          }
         }
       }
       this.todos_list.appendChild(ul_todos);
       this.entries_list.appendChild(ul_entries);
     }
-    // logEntries: function () {
-    //   this.todos_list.innerHTML = '';
-    //   this.entries_list.innerHTML = '';
-    //   let ul_entries = document.createElement('ul');
-    //   ul_entries.classList.add('entry-list');
-    //   let ul_todos = document.createElement('ul');
-    //   ul_todos.classList.add('todos-list');
-    //   let entries = this.sortEntries();
-    //   for (var i = 0; i < entries.length; i++)
-    //     if (entries[i].type !== 'T')
-    //       ul_entries.appendChild(entries[i].view(i));
-    //     else
-    //       ul_todos.appendChild(entries[i].view(i));
-    //   this.todos_list.appendChild(ul_todos);
-    //   this.entries_list.appendChild(ul_entries);
-    // }
   },
   sortEntries: function () {
     switch (this.sort_criteria) {
@@ -116,7 +101,5 @@ const app = {
 
 app.init();
 
-ipcRenderer.on('openFile', (event, path) => {
-  console.log('path', path)
-  app.openFile(path);
-});
+ipcRenderer.on('openFile', (event, path) => { app.openFile(path) });
+ipcRenderer.on('saveFile', (event, path) => { app.saveFile() });
