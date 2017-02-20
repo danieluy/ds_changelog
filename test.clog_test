@@ -1,6 +1,6 @@
 [Radiocero Premios]
 
-#   Sun Feb 19 2017 20:03:33 GMT-0300 (UYT)
+#   Mon Feb 20 2017 17:41:49 GMT-0300 (Hora estándar de Montevideo)
 
 #   T - todo          #
 #   P - plus          #
@@ -16,11 +16,11 @@
 	00000000 | T | Change administrator password, or allow it to be changed from UI
 	00000000 | T | cancelHandOverPrize() on backend
 v0.7.0
-	20170207 | P | Prize.edit() now uses Prize.checkInputData() instead of just checking if the data was provided
 	20170203 | R | Added Prize.checkInputData() to re-use this functionality
-	20170203 | R | Completely redone the prizes instantiation checks
-	20170131 | P | Added verification for periodic parameter on Prize class
-	20170131 | R | Prize class to have its methods declared through its prototype
+v0.6.2
+	20170130 | R | Prize class to use this keyword
+	20170130 | P | Added periodic: boolean to Prize class
+	20170130 | P | Added total_handed:number to Prize class
 v0.6.1
 	20170129 | P | Updated and improved the README.md
 	20170129 | P | Greatly improved the CLI UX

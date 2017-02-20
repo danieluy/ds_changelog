@@ -21,6 +21,7 @@ function createWindow() {
     slashes: true
   }))
 
+
   main_window.setMenu(null);
 
 
