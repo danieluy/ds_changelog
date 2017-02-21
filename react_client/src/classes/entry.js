@@ -1,5 +1,3 @@
-"use strict";
-
 const Entry = function (values) {
     this.id = values.id;
     this.version = values.version;

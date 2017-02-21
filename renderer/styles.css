@@ -1,18 +1,5 @@
 /*--  Reset  -----------------------------------------------------------------*/
-*, html{
-   margin: 0px;
-   padding: 0px;
-   box-sizing: border-box;
-   font-family: Roboto, FreeSans, Helvetica, Arial, sans-serif;
-   color: #eee;
-   font-size: 16px;
-}
-body{
-   font-family: Roboto, sans-serif;
-   color: #555;
-   font-size: 16px;
-   background-color: #333;
-}
+
 
 /*--  Navbar  -----------------------------------------------------------------*/
 nav.main{

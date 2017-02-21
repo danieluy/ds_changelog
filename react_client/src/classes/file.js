@@ -1,5 +1,3 @@
-"use strict";
-
 const Todo = require('./todo');
 const Plus = require('./plus');
 const Minus = require('./minus');
