@@ -9,18 +9,23 @@ const url = require('url')
 let main_window = undefined;
 let main_menu = undefined;
 
+
+// uncoment for development
+const main_ulr = 'http://localhost:3000';
+
+// uncoment for production
+// const main_ulr = url.format({
+//   pathname: path.join(__dirname, '../react_client/build/index.html'),
+//   protocol: 'file:',
+//   slashes: true
+// })
+
 function createWindow() {
   // Create the browser window.
   main_window = new BrowserWindow({ width: 1280, height: 768 })
   main_menu = require('./main-menu')(app, dialog, main_window);
 
-  // and load the index.html of the app.
-  main_window.loadURL(url.format({
-    pathname: path.join(__dirname, '../renderer/index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
-
+  main_window.loadURL(main_ulr);
 
   main_window.setMenu(null);
 
@@ -49,11 +54,7 @@ app.on('ready', () => {
     main_window.webContents.toggleDevTools();
   })
   globalShortcut.register('F5', () => {
-    main_window.loadURL(url.format({
-      pathname: path.join(__dirname, '../renderer/index.html'),
-      protocol: 'file:',
-      slashes: true
-    }))
+    main_window.loadURL(main_ulr)
   })
 })
 
