@@ -42,14 +42,19 @@ File.prototype.toSave = function () {
 
   for (let key in aux) {
     if (aux.hasOwnProperty(key)) {
-      console.log(key, aux[key].length)
       if (key !== 'ToDo' && aux[key].length)
         str_data += `${key}\n`;
-      aux[key].forEach(entry => {
-        if (entry.status !== 'deleted')
-          str_data += entry.toString();
-      })
+      str_data += filterDeleted(aux[key])
     }
+  }
+
+  function filterDeleted(entries) {
+    let aux = '';
+    entries.forEach(entry => {
+      if (entry.status !== 'deleted')
+        aux += entry.toString();
+    })
+    return aux;
   }
 
   return str_data

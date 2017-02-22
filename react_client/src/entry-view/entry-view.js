@@ -12,6 +12,8 @@ class EntryView extends Component {
 
   render() {
 
+    this.parentMethods = this.props.parentMethods;
+
     const values = this.props.values;
 
     // this.parentMethods = this.props.parentMethods;
@@ -33,6 +35,14 @@ class EntryView extends Component {
       }
     })()
 
+    function setActions(){
+      const actions = [];
+      let key = 0;
+      if(values.status !== 'deleted')
+        actions.push(<button key={++key} onClick={() => {this.parentMethods.deleteEntry(values.id)}} className="btn-close">&#x2716;</button>);
+      return actions;
+    }
+
     return (
       <li className={`list-item ${values.type.toLowerCase()} ${values.status}`}>
         <div>
@@ -40,7 +50,7 @@ class EntryView extends Component {
           {values.message}
         </div>
         <div className="actions-wrapper">
-          <button onClick={() => console.log(`Delete id ${values.id}`)} className="btn-close">&#x2716;</button>
+          {setActions.call(this)}
         </div>
       </li>
     );

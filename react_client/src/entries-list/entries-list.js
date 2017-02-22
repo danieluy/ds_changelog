@@ -14,7 +14,7 @@ class EntriesList extends Component {
           aux.push(<EntriesTitle key={key} title={key} />)
           let group = entries[key];
           for (let i = 0; i < group.length; i++) {
-            aux.push(<EntryView key={++id} values={{
+            aux.push(<EntryView key={++id} parentMethods={this.props.parentMethods} values={{
               id: group[i].id,
               version: group[i].version,
               type: group[i].type,

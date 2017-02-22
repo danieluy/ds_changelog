@@ -3,6 +3,7 @@
 const { app, BrowserWindow, ipcMain, Menu, dialog, globalShortcut } = require('electron')
 const path = require('path')
 const url = require('url')
+const fs = require('fs');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -32,6 +33,12 @@ function createWindow() {
 
   const menu_template = main_menu.template;
   Menu.setApplicationMenu(Menu.buildFromTemplate(menu_template));
+
+  main_window.saveFile = function (data, cb) {
+    fs.writeFile(data.path + '_test', data.content, function (err) {
+      cb(err);
+    })
+  }
 
   // Open the DevTools.
   // main_window.webContents.openDevTools()
@@ -84,5 +91,13 @@ app.on('activate', () => {
 
 ipcMain.on('openFile', (event, arg) => {
   main_menu.openFile();
-  event.sender.send('openFile-reply')
+})
+
+ipcMain.on('saveFile', (event, data) => {
+  main_window.saveFile(data, function (err) {
+    if (err)
+      event.sender.send('saveFileResult', { err: err })
+    else
+      event.sender.send('saveFileResult', { err: null })
+  });
 })

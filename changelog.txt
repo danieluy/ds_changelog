@@ -1,5 +1,10 @@
 [DS Changelog]
 v0.2.0
+	20170222 | + | Save entry functionality implemented
+	20170222 | R | File loading logic moved to main process
+	20170222 | - | App.js's fs dependency removed
+	20170222 | + | Delete entry functionality implemented
+	20170221 | + | Open entry functionality implemented
 	20170221 | + | Started the react client development
 v0.1.0
 	20170219 | + | Implemented save functionality

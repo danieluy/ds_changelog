@@ -12,11 +12,17 @@
     opacity: .5;
     margin-right: 15px;
 }
-.list-item.p, .list-item.f{
-    background-color: #585
+.list-item.p{
+    background-color: #588
 }
-.list-item.m, .list-item.b{
+.list-item.m, .list-item{
+    background-color: #885;
+}
+.list-item.b{
     background-color: #855;
+}
+.list-item.f{
+    background-color: #585
 }
 .list-item.r{
     background-color: #558;
@@ -35,6 +41,8 @@
     color: rgba(0, 0, 0, .5);
 }
 .deleted{
-    text-decoration: line-through;
-    background-color: transparent;
+    background-color: transparent !important;
+}
+.deleted > div{
+    color: rgba(0, 0, 0, .25);
 }
