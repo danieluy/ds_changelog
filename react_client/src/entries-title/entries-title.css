@@ -1,5 +1,6 @@
-li{
-  font-size: 1.5rem;
+li.list-title{
+  font-size: 1.1rem;
   font-weight: lighter;
-  color: #222;
+  color: #fff;
+  background-color: transparent;
 }

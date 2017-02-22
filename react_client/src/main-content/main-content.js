@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './main-content.css'
 
 import EntriesList from '../entries-list/entries-list'
+import TodosList from '../todos-list/todos-list'
 
 
 class Content extends Component {
@@ -13,7 +14,7 @@ class Content extends Component {
 
         <EntriesList entries={this.props.entries} parentMethods={this.props.parentMethods} ></EntriesList>
 
-        {/*<Todos></Todos>*/}
+        <TodosList entries={this.props.entries} parentMethods={this.props.parentMethods} ></TodosList>
 
       </div>
     );

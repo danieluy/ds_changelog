@@ -29,22 +29,22 @@ class EntryView extends Component {
         case 'F':
           return {src: fix_icon, alt: 'Fix entry icon', title: 'Fixed something'};
         case 'B':
-          return {src: bug_icon, alt: 'Bug entry icon', title: 'Bug found'};
+          return { src: bug_icon, alt: 'Bug entry icon', title: 'Bug found' };
         default:
-          return {src: todo_icon, alt: 'ToDo entry icon', title: 'Something to do'};
+          return { src: todo_icon, alt: 'ToDo entry icon', title: 'Something to do' };
       }
     })()
 
-    function setActions(){
+    function setActions() {
       const actions = [];
       let key = 0;
-      if(values.status !== 'deleted')
-        actions.push(<button key={++key} onClick={() => {this.parentMethods.deleteEntry(values.id)}} className="btn-close">&#x2716;</button>);
+      if (values.status !== 'deleted')
+        actions.push(<button key={++key} onClick={() => { this.parentMethods.deleteEntry(values.id) }} className="btn-close">&#x2716;</button>);
       return actions;
     }
 
     return (
-      <li className={`list-item ${values.type.toLowerCase()} ${values.status}`}>
+      <li className={`${values.type.toLowerCase()} ${values.status}`}>
         <div>
           <img className="type-icon" src={icon.src} alt={icon.alt} title={icon.title} />
           {values.message}

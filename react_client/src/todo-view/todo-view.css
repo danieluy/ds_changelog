@@ -4,7 +4,8 @@ li{
     justify-content: space-between;
     padding: 15px;
     background-color: #555;
-    border-bottom: 1px solid #333
+    border-bottom: 1px solid #333;
+    cursor: pointer;
 }
 .type-icon{
     width: 1rem;
@@ -12,20 +13,8 @@ li{
     opacity: .5;
     margin-right: 15px;
 }
-li.p{
-    background-color: #588
-}
-li.m, li{
-    background-color: #885;
-}
-li.b{
-    background-color: #855;
-}
-li.f{
-    background-color: #585
-}
-li.r{
-    background-color: #558;
+li.t{
+    background-color: #555
 }
 .actions-wrapper{
     margin-left: 15px;
@@ -40,9 +29,9 @@ li.r{
 .btn-close:hover{
     color: rgba(0, 0, 0, .5);
 }
-.deleted{
+.checked{
     background-color: transparent !important;
 }
-.deleted > div{
+.checked > div{
     color: rgba(0, 0, 0, .25);
 }

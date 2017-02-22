@@ -35,9 +35,20 @@ function createWindow() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(menu_template));
 
   main_window.saveFile = function (data, cb) {
-    fs.writeFile(data.path + '_test', data.content, function (err) {
+    fs.writeFile(data.path, data.content, function (err) {
       cb(err);
     })
+  }
+
+  main_window.openFile = function () {
+    dialog.showOpenDialog(function (filePaths) {
+      if (filePaths) {
+        main_window.webContents.send('openFileRes', {
+          path: filePaths[0],
+          content: fs.readFileSync(filePaths[0], 'UTF-8')
+        });
+      }
+    });
   }
 
   // Open the DevTools.
@@ -57,6 +68,18 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   createWindow();
+
+
+  globalShortcut.register('CommandOrControl+O', () => {
+    main_window.webContents.send('openFile');
+  })
+
+  globalShortcut.register('CommandOrControl+S', () => {
+    main_window.webContents.send('saveFile');
+  })
+
+
+  // Development
   globalShortcut.register('F12', () => {
     main_window.webContents.toggleDevTools();
   })
@@ -90,14 +113,14 @@ app.on('activate', () => {
 // code. You can also put them in separate files and require them here.
 
 ipcMain.on('openFile', (event, arg) => {
-  main_menu.openFile();
+  main_window.openFile();
 })
 
 ipcMain.on('saveFile', (event, data) => {
   main_window.saveFile(data, function (err) {
     if (err)
-      event.sender.send('saveFileResult', { err: err })
+      event.sender.send('saveFileRes', { err: err })
     else
-      event.sender.send('saveFileResult', { err: null })
+      event.sender.send('saveFileRes', { err: null })
   });
 })

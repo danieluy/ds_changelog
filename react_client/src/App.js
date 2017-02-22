@@ -13,19 +13,20 @@ class App extends Component {
 
   constructor() {
     super();
-    ipcRenderer.on('openFile', (evt, data) => { this.openFile.call(this, data) })
+    ipcRenderer.on('openFile', (evt, data) => { this.openFile.call(this) })
     ipcRenderer.on('saveFile', (evt, data) => { this.saveFile.call(this) })
-    ipcRenderer.on('saveFileResult', (evt, result) => { result.err ? console.error(result.err.stack ? result.err.stack : result.err) : console.log('File saved') })
+    ipcRenderer.on('openFileRes', (evt, data) => { this.openFileRes.call(this, data) })
+    ipcRenderer.on('saveFileRes', (evt, result) => { result.err ? console.error(result.err.stack ? result.err.stack : result.err) : console.log('File saved') })
     this.state = {
       entries: []
     }
   }
 
-  callOpenFile(e) {
+  openFile(e) {
     ipcRenderer.send('openFile');
   }
 
-  openFile(data) {
+  openFileRes(data) {
     this.open_file = new File({
       path: data.path,
       content: data.content
@@ -45,6 +46,12 @@ class App extends Component {
     this.setState({ entries: this.sortEntries('version') });
   }
 
+  toggleToDoDone(id) {
+    console.log('Entry id =', id)
+    this.open_file.toggleToDoDone(id);
+    this.setState({ entries: this.sortEntries('version') });
+  }
+
   sortEntries(sort_criteria) {
     switch (sort_criteria) {
       case 'date':
@@ -58,11 +65,12 @@ class App extends Component {
     return (
       <div>
         <Navbar parentMethods={{
-          callOpenFile: this.callOpenFile,
+          openFile: this.openFile,
           saveFile: this.saveFile.bind(this)
         }} />
         <MainContent entries={this.state.entries} parentMethods={{
-          deleteEntry: this.deleteEntry.bind(this)
+          deleteEntry: this.deleteEntry.bind(this),
+          toggleToDoDone: this.toggleToDoDone.bind(this)
         }} />
       </div>
     );

@@ -4,7 +4,7 @@ import './entries-title.css'
 class EntriesTitle extends Component {
   render() {
     return (
-      <li>{this.props.title}</li>
+      <li className="list-title">{this.props.title}</li>
     );
   }
 }

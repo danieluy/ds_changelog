@@ -1,20 +1,6 @@
-const fs = require('fs');
-
 module.exports = function (app, dialog, main_window) {
 
-  const openFile = function () {
-    dialog.showOpenDialog(function (filePaths) {
-      if (filePaths) {
-        main_window.webContents.send('openFile', {
-          path: filePaths[0],
-          content: fs.readFileSync(filePaths[0], 'UTF-8')
-        });
-      }
-    });
-  }
-
   return {
-    openFile: openFile,
     template: [
       {
         label: 'File',
@@ -22,7 +8,7 @@ module.exports = function (app, dialog, main_window) {
           {
             label: 'Open File...',
             click: () => {
-              openFile();
+              main_window.webContents.send('openFile');
             }
           },
           {

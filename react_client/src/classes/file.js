@@ -27,7 +27,7 @@ File.prototype.toSave = function () {
 #   M - minus         #
 #   R - refactoring   #
 #   B - bug           #
-#   F - fix           #
+#   F - bug fix       #
 
 # ToDo
 `
@@ -51,7 +51,7 @@ File.prototype.toSave = function () {
   function filterDeleted(entries) {
     let aux = '';
     entries.forEach(entry => {
-      if (entry.status !== 'deleted')
+      if (entry.status !== 'deleted' && entry.status !== 'checked')
         aux += entry.toString();
     })
     return aux;
@@ -77,7 +77,7 @@ File.prototype.parseContent = function (str_content) {
             id: ++id,
             version: version,
             date: line_data[0].trim(),
-            type: line_data[1].trim(),
+            type: line_data[1].trim().charAt(0),
             message: line_data[2].trim()
           }))
         }
@@ -117,10 +117,21 @@ File.prototype.deleteEntry = function (id) {
   this.setHistory();
   let deleted = false, i = 0;
   while (!deleted && i < this.entries.length) {
-    console.log(this.entries[i].id === id)
     if (this.entries[i].id === id) {
       this.entries[i].status = 'deleted';
       deleted = true;
+    }
+    i++;
+  }
+  return;
+}
+File.prototype.toggleToDoDone = function(id){
+  this.setHistory();
+  let found = false, i = 0;
+  while (!found && i < this.entries.length) {
+    if (this.entries[i].id === id) {
+      this.entries[i].status = this.entries[i].status === 'checked' ? 'unchecked' : 'checked';
+      found = true;
     }
     i++;
   }

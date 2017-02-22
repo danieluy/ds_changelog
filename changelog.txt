@@ -1,32 +1,53 @@
 [DS Changelog]
+
+#   Wed Feb 22 2017 12:18:26 GMT-0300 (UYT)
+
+#   T - todo          #
+#   P - plus          #
+#   M - minus         #
+#   R - refactoring   #
+#   B - bug           #
+#   F - bug fix       #
+
+# ToDo
+	00000000 | T | Manage correlations of bugs and fixes
+	00000000 | T | Implement undo functionality
+	00000000 | T | Implement entries creation
+	00000000 | T | Implement todos creation
 v0.2.0
-	20170222 | + | Save entry functionality implemented
+	20170222 | P | Save funcionality no longer saves a new file
+	20170222 | P | ToDos can now be checked or unchecked
+	20170222 | P | Separated ToDo's views from other entry's views
+	20170222 | R | All the logic that was placed on main-menu.js was moved to main.js
+	20170222 | M | main-menu.js's fs dependency removed
+	20170222 | P | Progress of the non react version matched
+	20170222 | P | Save entry functionality implemented
 	20170222 | R | File loading logic moved to main process
-	20170222 | - | App.js's fs dependency removed
-	20170222 | + | Delete entry functionality implemented
-	20170221 | + | Open entry functionality implemented
-	20170221 | + | Started the react client development
+	20170222 | M | App.js's fs dependency removed
+	20170222 | P | Delete entry functionality implemented
+	20170221 | P | Open entry functionality implemented
+	20170221 | P | Started the react client development
 v0.1.0
-	20170219 | + | Implemented save functionality
-	20170219 | + | Implemented delete functionality
-	20170219 | + | Implemented developer tools toggle (F12) and refresh (F5) shortcuts
-	20170219 | + | Added menu-template.js dependency
+	20170219 | P | Implemented save functionality
+	20170219 | P | Implemented delete functionality
+	20170219 | P | Implemented developer tools toggle (F12) and refresh (F5) shortcuts
+	20170219 | P | Added menu-template.js dependency
 	20170219 | R | Separated files for main and renderer process in different folders
-	20170217 | + | File opening functionality now gets the file path from the main process using the system's open file dialog
-	20170217 | + | Added personalized app menu
-	20170217 | - | Default app menu removed
+	20170217 | P | File opening functionality now gets the file path from the main process using the system's open file dialog
+	20170217 | P | Added personalized app menu
+	20170217 | M | Default app menu removed
 	20170217 | R | Sorting methods now return Object with a key for each different value of the sorting criteria
 	20170217 | R | Entry list in File is now an array
-	20170217 | + | Added a class for every entry type that inherits from Entry
-	20170215 | + | Added React blank application
-	20170214 | + | UI improvements
-	20170214 | + | lots of changes, no time to register
-	20170212 | F1 | The class Entry now handles the whole view
-	20170210 | B1 | Classes for types are not showing
-	20170210 | + | File now handles its own state
-	20170125 | + | Added form to add new log entries
-	20170124 | + | Started the UX
-	20170124 | + | Started the architecture definition
-	20170124 | - | Removed files.js dependency, replaced it with fs module directly
-	20170123 | + | Added Electron.js
-	20170123 | + | Started development
+	20170217 | P | Added a class for every entry type that inherits from Entry
+	20170215 | P | Added React blank application
+	20170214 | P | UI improvements
+	20170214 | P | lots of changes, no time to register
+	20170212 | F | The class Entry now handles the whole view
+	20170210 | B | Classes for types are not showing
+	20170210 | P | File now handles its own state
+	20170125 | P | Added form to add new log entries
+	20170124 | P | Started the UX
+	20170124 | P | Started the architecture definition
+	20170124 | M | Removed files.js dependency, replaced it with fs module directly
+	20170123 | P | Added Electron.js
+	20170123 | P | Started development
