@@ -1,4 +1,6 @@
 [DS Changelog]
+v0.2.0
+	20170221 | + | Started the react client development
 v0.1.0
 	20170219 | + | Implemented save functionality
 	20170219 | + | Implemented delete functionality

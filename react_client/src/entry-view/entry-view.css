@@ -1,0 +1,40 @@
+.list-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #555;
+    border-bottom: 1px solid #333
+}
+.type-icon{
+    width: 1rem;
+    height: 1rem;
+    opacity: .5;
+    margin-right: 15px;
+}
+.list-item.p, .list-item.f{
+    background-color: #585
+}
+.list-item.m, .list-item.b{
+    background-color: #855;
+}
+.list-item.r{
+    background-color: #558;
+}
+.actions-wrapper{
+    margin-left: 15px;
+}
+.btn-close{
+    height: 100%;
+    background-color: transparent;
+    border-style: none;
+    color: rgba(0, 0, 0, .25);
+    cursor: pointer;
+}
+.btn-close:hover{
+    color: rgba(0, 0, 0, .5);
+}
+.deleted{
+    text-decoration: line-through;
+    background-color: transparent;
+}

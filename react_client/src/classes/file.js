@@ -1,9 +1,10 @@
-const Todo = require('./todo');
-const Plus = require('./plus');
-const Minus = require('./minus');
-const Refactoring = require('./refactoring');
-const Bug = require('./bug');
-const Fix = require('./fix');
+// const Todo = require('./todo');
+// const Plus = require('./plus');
+// const Minus = require('./minus');
+// const Refactoring = require('./refactoring');
+// const Bug = require('./bug');
+// const Fix = require('./fix');
+const Entry = require('./entry');
 
 const File = function (values) {
   this.path = values.path;
@@ -40,19 +41,20 @@ File.prototype.toSave = function () {
   })
 
   for (let key in aux) {
-    console.log(key, aux[key].length)
-    if (key !== 'ToDo' && aux[key].length)
-      str_data += `${key}\n`;
-    aux[key].forEach(entry => {
-      if (entry.status !== 'deleted')
-        str_data += entry.toString();
-    })
+    if (aux.hasOwnProperty(key)) {
+      console.log(key, aux[key].length)
+      if (key !== 'ToDo' && aux[key].length)
+        str_data += `${key}\n`;
+      aux[key].forEach(entry => {
+        if (entry.status !== 'deleted')
+          str_data += entry.toString();
+      })
+    }
   }
 
   return str_data
 }
 File.prototype.parseContent = function (str_content) {
-  let json = {};
   let version = 'ToDo';
   const entries = [];
   let id = 0;
@@ -66,7 +68,7 @@ File.prototype.parseContent = function (str_content) {
           version = line.trim();
         else {
           let line_data = line.split('|')
-          entries.push(this.newEntry({
+          entries.push(new Entry({
             id: ++id,
             version: version,
             date: line_data[0].trim(),
@@ -120,7 +122,7 @@ File.prototype.deleteEntry = function (id) {
   return;
 }
 File.prototype.setHistory = function () {
-  const aux = this.entries.map(entry => this.newEntry({
+  const aux = this.entries.map(entry => new Entry({
     id: entry.id,
     version: entry.version,
     type: entry.type,
@@ -131,19 +133,19 @@ File.prototype.setHistory = function () {
   this.state.history.push(aux);
   return this.state.history.length;
 }
-File.prototype.newEntry = function (values) {
-  if (values.type === 'T')
-    return new Todo(values);
-  if (values.type === 'P')
-    return new Plus(values);
-  if (values.type === 'M')
-    return new Minus(values);
-  if (values.type === 'R')
-    return new Refactoring(values);
-  if (values.type === 'B')
-    return new Bug(values);
-  if (values.type === 'F')
-    return new Fix(values);
-}
+// File.prototype.newEntry = function (values) {
+//   if (values.type === 'T')
+//     return new Todo(values);
+//   if (values.type === 'P')
+//     return new Plus(values);
+//   if (values.type === 'M')
+//     return new Minus(values);
+//   if (values.type === 'R')
+//     return new Refactoring(values);
+//   if (values.type === 'B')
+//     return new Bug(values);
+//   if (values.type === 'F')
+//     return new Fix(values);
+// }
 
 module.exports = File;

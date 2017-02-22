@@ -28,21 +28,16 @@ class App extends Component {
       path: path,
       content: fs.readFileSync(path, 'UTF-8')
     })
-    this.setState({ entries: this.setEntries(open_file) });
+    this.setState({ entries: this.sortEntries(open_file, 'version') });
   }
 
-  setEntries(open_file) {
-    const entriesByVersion = open_file.entriesByVersion();
-    const aux = [];
-    let index = 0;
-    for (let key in entriesByVersion) {
-      if (entriesByVersion.hasOwnProperty(key)) {
-        const entries = entriesByVersion[key];
-        for (let i = 0; i < entries.length; i++){
-          aux.push(entries[i].view(++index))}
-      }
+  sortEntries(open_file, sort_criteria) {
+    switch (sort_criteria) {
+      case 'date':
+        return open_file.entriesByDate();
+      default:
+        return open_file.entriesByVersion();
     }
-    return aux;
   }
 
   render() {
