@@ -11,10 +11,14 @@ const File = function (values) {
   this.content = values.content;
   this.title = null;
   // this.versions = [];
+  this.entryId = 0;
   this.entries = this.parseContent(values.content);
   this.state = {
     history: []
   };
+}
+File.prototype.getVersions = function () {
+  return Object.keys(this.entriesByVersion()).splice(1);
 }
 File.prototype.toSave = function () {
   let str_data =
@@ -62,7 +66,6 @@ File.prototype.toSave = function () {
 File.prototype.parseContent = function (str_content) {
   let version = 'ToDo';
   const entries = [];
-  let id = 0;
   str_content.split('\n')
     .map(line => line.trim())
     .forEach(line => {
@@ -74,7 +77,7 @@ File.prototype.parseContent = function (str_content) {
         else {
           let line_data = line.split('|')
           entries.push(new Entry({
-            id: ++id,
+            id: ++this.entryId,
             version: version,
             date: line_data[0].trim(),
             type: line_data[1].trim().charAt(0),
@@ -125,7 +128,7 @@ File.prototype.deleteEntry = function (id) {
   }
   return;
 }
-File.prototype.toggleToDoDone = function(id){
+File.prototype.toggleToDoDone = function (id) {
   this.setHistory();
   let found = false, i = 0;
   while (!found && i < this.entries.length) {
@@ -149,19 +152,35 @@ File.prototype.setHistory = function () {
   this.state.history.push(aux);
   return this.state.history.length;
 }
-// File.prototype.newEntry = function (values) {
-//   if (values.type === 'T')
-//     return new Todo(values);
-//   if (values.type === 'P')
-//     return new Plus(values);
-//   if (values.type === 'M')
-//     return new Minus(values);
-//   if (values.type === 'R')
-//     return new Refactoring(values);
-//   if (values.type === 'B')
-//     return new Bug(values);
-//   if (values.type === 'F')
-//     return new Fix(values);
-// }
+File.prototype.newEntry = function (values) {
+  this.checkNewEntryInput(values);
+  if (!values.date) {
+    const aux_date = new Date();
+    values.date = `${aux_date.getFullYear()}${this.twoDigits(aux_date.getMonth() + 1)}${this.twoDigits(aux_date.getDate())}`
+  }
+  const entry = new Entry({
+    id: ++this.entryId,
+    version: values.version,
+    date: values.date,
+    type: values.type,
+    message: values.message
+  });
+  this.setHistory();
+  this.entries.push(entry);
+  return;
+}
+File.prototype.checkNewEntryInput = function (values) {
+  if (!values || !values.version || !values.type || !values.message)
+    throw new Error('Expected parameter { version: string, type: string, message: string [, date: string] }')
+  if (!values.version.match(/v\d+\.\d+\.\d+/))
+    throw new Error('Expected parameter <version: string> to match "v0.0.0" pattern')
+  if (!values.type.match(/T|P|M|B|F|R/))
+    throw new Error('Expected parameter <type: string> to be "T", "P", "M", "B", "F" or "R"')
+  if (values.date && !values.date.match(/\d{8}/))
+    throw new Error('Expected parameter <date: string> to match "yyyyMMdd" pattern')
+}
+File.prototype.twoDigits = function (value) {
+  return value.toString().length > 1 ? value.toString() : `0${value}`;
+}
 
 module.exports = File;

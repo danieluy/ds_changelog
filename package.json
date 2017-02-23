@@ -23,5 +23,6 @@
     "chai": "^3.5.0",
     "electron": "^1.4.15",
     "electron-packager": "^8.5.2"
-  }
+  },
+  "dependencies": {}
 }

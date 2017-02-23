@@ -1,2 +1,0 @@
-# DS Changelog
-Changelog manager
