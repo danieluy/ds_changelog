@@ -12,14 +12,14 @@ let main_menu = undefined;
 
 
 // uncoment for development
-const main_ulr = 'http://localhost:3000';
+// const main_ulr = 'http://localhost:3000';
 
 // uncoment for production
-// const main_ulr = url.format({
-//   pathname: path.join(__dirname, '../react_client/build/index.html'),
-//   protocol: 'file:',
-//   slashes: true
-// })
+const main_ulr = url.format({
+  pathname: path.join(__dirname, '../react_client/build/index.html'),
+  protocol: 'file:',
+  slashes: true
+})
 
 function createWindow() {
   // Create the browser window.

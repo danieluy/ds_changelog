@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=0.1.0
+Name=DS Changelog
+Comment=Changelog manager
+Exec=/home/daniel/Dev/Github/ds_changelog/dist/dschangelog-linux-x64/dschangelog
+Icon=/home/daniel/Dev/Github/ds_changelog/dist/dschangelog-linux-x64/resources/app/assets/icon.png
+Terminal=false
+Type=Application
+Categories=Development;Utility;Application;

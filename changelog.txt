@@ -1,6 +1,6 @@
 [DS Changelog]
 
-#   Wed Feb 22 2017 12:18:26 GMT-0300 (UYT)
+#   Wed Feb 22 2017 23:13:33 GMT-0300 (UYT)
 
 #   T - todo          #
 #   P - plus          #
@@ -14,7 +14,9 @@
 	00000000 | T | Implement undo functionality
 	00000000 | T | Implement entries creation
 	00000000 | T | Implement todos creation
+	00000000 | T | Implement views for diferent sorting criterias
 v0.2.0
+	20170222 | P | Added electron-packager to dev-dependencies
 	20170222 | P | Save funcionality no longer saves a new file
 	20170222 | P | ToDos can now be checked or unchecked
 	20170222 | P | Separated ToDo's views from other entry's views
