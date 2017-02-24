@@ -16,7 +16,7 @@ class NewAllForm extends Component {
 
     this.parentMethods.newEntry({
       type: evt.target.type.value,
-      version: evt.target.version.value,
+      version: evt.target.type.value === 'T' ? 'ToDo' : evt.target.version.value,
       date: date,
       message: evt.target.message.value
     })

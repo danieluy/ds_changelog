@@ -26,12 +26,12 @@ File.prototype.toSave = function () {
 
 #   ${new Date().toString()}
 
-#   T - todo          #
-#   P - plus          #
-#   M - minus         #
-#   R - refactoring   #
-#   B - bug           #
-#   F - bug fix       #
+#   T - ToDo                        #
+#   P - Added something (plus)      #
+#   M - Removed something (minus)   #
+#   R - Refactoring                 #
+#   B - Bug                         #
+#   F - Bug fix                     #
 
 # ToDo
 `
@@ -44,18 +44,33 @@ File.prototype.toSave = function () {
       aux[entry.version].push(entry);
   })
 
-  for (let key in aux) {
-    if (aux.hasOwnProperty(key)) {
-      if (key !== 'ToDo' && aux[key].length)
+  aux.ToDo.forEach(todo => {
+    if (todo.status !== 'checked')
+      str_data += todo.toString();
+  })
+
+  delete aux.ToDo;
+
+  Object.keys(aux)
+    .sort((a, b) => a < b)
+    .forEach(key => {
+      if (aux[key].length)
         str_data += `${key}\n`;
       str_data += filterDeleted(aux[key])
-    }
-  }
+    });
+
+  // for (let key in aux) {
+  //   if (aux.hasOwnProperty(key)) {
+  //     if (aux[key].length)
+  //       str_data += `${key}\n`;
+  //     str_data += filterDeleted(aux[key])
+  //   }
+  // }
 
   function filterDeleted(entries) {
     let aux = '';
     entries.forEach(entry => {
-      if (entry.status !== 'deleted' && entry.status !== 'checked')
+      if (entry.status !== 'deleted')
         aux += entry.toString();
     })
     return aux;
@@ -89,13 +104,19 @@ File.prototype.parseContent = function (str_content) {
   return entries;
 }
 File.prototype.entriesByVersion = function () {
-  const ret = {};
+  const aux1 = {};
   this.entries.forEach(entry => {
-    if (!ret.hasOwnProperty(entry.version))
-      ret[entry.version] = [];
-    ret[entry.version].push(entry);
+    if (!aux1.hasOwnProperty(entry.version))
+      aux1[entry.version] = [];
+    aux1[entry.version].push(entry);
   })
-  return ret;
+  const aux2 = {};
+  Object.keys(aux1)
+    .sort((a, b) => a < b)
+    .forEach(key => {
+      aux2[key] = aux1[key]
+    });
+  return aux2;
 }
 File.prototype.entriesByType = function () {
   // const ret = [];
@@ -166,7 +187,7 @@ File.prototype.newEntry = function (values) {
     message: values.message
   });
   this.setHistory();
-  this.entries.push(entry);
+  this.entries.unshift(entry);
   return;
 }
 File.prototype.checkNewEntryInput = function (values) {

@@ -1,24 +1,28 @@
 [Radiocero Premios]
 
-#   Thu Feb 23 2017 17:07:34 GMT-0300 (UYT)
+#   Thu Feb 23 2017 21:40:10 GMT-0300 (UYT)
 
-#   T - todo          #
-#   P - plus          #
-#   M - minus         #
-#   R - refactoring   #
-#   B - bug           #
-#   F - bug fix       #
+#   T - ToDo                        #
+#   P - Added something (plus)      #
+#   M - Removed something (minus)   #
+#   R - Refactoring                 #
+#   B - Bug                         #
+#   F - Bug fix                     #
 
 # ToDo
 	00000000 | T | Test winner.js => hasWonSinceThreeMonths()
 	00000000 | T | Filter prizes by due date and stock
-v0.6.1
-	20170129 | P | Updated and improved the README.md
-	20170129 | P | Greatly improved the CLI UX
-	20170129 | P | Moved to a fresh repository
-	20170129 | M | Removed unused dependencies
-	20170223 | P | Something added
+	00000000 | T | On prize creation check due_date >= set_date
+	00000000 | T | Change administrator password, or allow it to be changed from UI
+	00000000 | T | cancelHandOverPrize() on backend
+v0.7.0
+	20170207 | P | Prize.edit() now uses Prize.checkInputData() instead of just checking if the data was provided
+	20170203 | R | Added Prize.checkInputData() to re-use this functionality
+	20170203 | R | Completely redone the prizes instantiation checks
+	20170131 | P | Added verification for periodic parameter on Prize class
+	20170131 | R | Prize class to have its methods declared through its prototype
 v0.6.0
+	20170223 | P | lalala
 	20170125 | P | Added /prizes/edit api_router route and method
 	20170125 | P | Added Prize.edit() method
 	20170116 | P | Added method to check if a winner has won in the last three months
