@@ -1,13 +1,13 @@
 [DS Changelog]
 
-#   Thu Feb 23 2017 11:20:57 GMT-0300 (UYT)
+#   Thu Mar 30 2017 09:16:22 GMT-0300 (Hora estándar de Montevideo)
 
-#   T - todo          #
-#   P - plus          #
-#   M - minus         #
-#   R - refactoring   #
-#   B - bug           #
-#   F - bug fix       #
+#   T - ToDo                        #
+#   P - Added something (plus)      #
+#   M - Removed something (minus)   #
+#   R - Refactoring                 #
+#   B - Bug                         #
+#   F - Bug fix                     #
 
 # ToDo
 	00000000 | T | Manage correlations of bugs and fixes
@@ -18,7 +18,7 @@
 	00000000 | T | Improve date checking on File.prototype.newEntry()
 	00000000 | T | Implement views for diferent sorting criterias
 v0.2.0
-	20170223 | B2 | File.prototype.newEntry() shouldn't reject inputs if version == ToDo 
+	20170223 | B | File.prototype.newEntry() shouldn't reject inputs if version == ToDo
 	20170223 | P | Implemented Entry adding functionality, needs a lot of work!
 	20170222 | P | Added electron-packager to dev-dependencies
 	20170222 | P | Save funcionality no longer saves a new file
@@ -48,8 +48,8 @@ v0.1.0
 	20170215 | P | Added React blank application
 	20170214 | P | UI improvements
 	20170214 | P | lots of changes, no time to register
-	20170212 | F1 | The class Entry now handles the whole view
-	20170210 | B1 | Classes for types are not showing
+	20170212 | F | The class Entry now handles the whole view
+	20170210 | B | Classes for types are not showing
 	20170210 | P | File now handles its own state
 	20170125 | P | Added form to add new log entries
 	20170124 | P | Started the UX
